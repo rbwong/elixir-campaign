@@ -9,6 +9,13 @@ defmodule VampWeb.PeopleResolver do
     {:ok, People.list_users()}
   end
 
+  def assign_user_team(_root, args, _info) do
+    case People.upsert_user_teams(args.user_id, args.team_id) do
+      {:ok, user} -> {:ok, user}
+      {:error, reason} -> {:error, reason}
+    end
+  end
+
   def login_user(_root, args, _info) do
     {email, password} = args
 

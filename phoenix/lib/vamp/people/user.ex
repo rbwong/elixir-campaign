@@ -2,6 +2,9 @@ defmodule Vamp.People.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Vamp.People.Team
+  alias Vamp.People.UserTeam
+
   schema "users" do
     field :email, :string
     field :is_admin, :boolean, default: false
@@ -10,7 +13,21 @@ defmodule Vamp.People.User do
     field :password_hash, :string
     field :phone, :string
 
+    many_to_many(
+      :teams,
+      Team,
+      join_through: UserTeam,
+      on_replace: :delete
+    )
+
     timestamps()
+  end
+
+  def changeset_update_teams(user, teams) do
+    user
+    |> cast(%{}, [:email, :name, :phone, :password, :password_hash, :is_admin, :inserted_at, :updated_at])
+    # associate teams to the user
+    |> put_assoc(:teams, teams)
   end
 
   def changeset(struct, params \\ %{}) do

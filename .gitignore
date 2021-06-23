@@ -1,13 +1,13 @@
 # App artifacts
-/_build
+/phoenix/_build
 /db
 /deps
 /*.ez
 
 # Generated on crash by the VM
-erl_crash.dump
+/erl_crash.dump
 
-/config/*.secret.exs
+phoenix/config/*.secret.exs
 
 # macOS kruft
 .DS_Store

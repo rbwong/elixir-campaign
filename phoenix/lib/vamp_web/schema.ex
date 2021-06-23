@@ -15,6 +15,7 @@ defmodule VampWeb.Schema do
     field :email, non_null(:string)
     field :name, non_null(:string)
     field :phone, non_null(:string)
+    field :teams, list_of(:team)
   end
 
   object :jwt do
@@ -40,6 +41,14 @@ defmodule VampWeb.Schema do
       arg :password, non_null(:string)
 
       resolve &PeopleResolver.login_user/3
+    end
+
+    @desc "Assigns a team to a user"
+    field :assign_user_team, :user do
+      arg :user_id, non_null(:id)
+      arg :team_id, non_null(:id)
+
+      resolve &PeopleResolver.assign_user_team/3
     end
   end
 end

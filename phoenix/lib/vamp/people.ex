@@ -115,7 +115,7 @@ defmodule Vamp.People do
 
   """
   def list_users do
-    Repo.all(User)
+    Repo.all(User) |> Repo.preload(:teams)
   end
 
   @doc """
@@ -209,6 +209,22 @@ defmodule Vamp.People do
         else
           {:error, :unauthorized}
         end
+    end
+  end
+
+  def upsert_user_teams(user_id, team_id) do
+    user = Repo.get!(User, user_id) |> Repo.preload(:teams)
+    team = Repo.get!(Team, team_id)
+    teams = [team]
+
+    with {:ok, _struct} <-
+           user
+           |> User.changeset_update_teams(teams)
+           |> Repo.update() do
+      {:ok, Repo.get!(User, user.id)}
+    else
+      error ->
+        error
     end
   end
 end
