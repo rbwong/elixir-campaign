@@ -2,6 +2,9 @@ defmodule VampWeb.Schema do
   use Absinthe.Schema
 
   alias VampWeb.PeopleResolver
+  alias VampWeb.BrandResolver
+
+  import_types Absinthe.Type.Custom
 
   object :team do
     field :id, non_null(:id)
@@ -22,6 +25,21 @@ defmodule VampWeb.Schema do
     field :jwt, non_null(:string)
   end
 
+  object :tag do
+    field :id, non_null(:id)
+    field :name, non_null(:string)
+  end
+
+  object :campaign do
+    field :id, non_null(:id)
+    field :name, non_null(:string)
+    field :budget, non_null(:decimal)
+    field :start_date, non_null(:datetime)
+    field :end_date, non_null(:datetime)
+    field :descsription, non_null(:string)
+    field :tags, list_of(:tag)
+  end
+
   query do
     @desc "Get all teams"
     field :all_teams, non_null(list_of(non_null(:team))) do
@@ -31,6 +49,16 @@ defmodule VampWeb.Schema do
     @desc "Get all users"
     field :all_users, non_null(list_of(non_null(:user))) do
       resolve(&PeopleResolver.all_users/3)
+    end
+
+    @desc "Get all tags"
+    field :all_tags, non_null(list_of(non_null(:tag))) do
+      resolve(&BrandResolver.all_tags/3)
+    end
+
+    @desc "Get all campaigns"
+    field :all_campaigns, non_null(list_of(non_null(:campaign))) do
+      resolve(&BrandResolver.all_campaigns/3)
     end
   end
 
