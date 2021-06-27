@@ -34,7 +34,7 @@ defmodule VampWeb.Router do
   end
 
   scope "/graphql" do
-    pipe_through([:api])
+    pipe_through([:api, :authenticated])
 
     forward(
       "/",

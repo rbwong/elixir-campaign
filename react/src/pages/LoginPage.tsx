@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
-import { useMutation } from "@apollo/client"
 import styled from "@emotion/styled"
 import Cookies from "js-cookie"
 import { toast, ToastContainer } from "react-toastify"
 
 // Data
-import { LOGIN } from "data/authentication/mutations"
+import { loginApi } from "data/authentication/api"
 import { baseColors, fontColors } from "constants/colors"
 
 // Components
@@ -63,17 +62,6 @@ function LoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const isAuthenticated = Cookies.get("ecToken")
-  const [login] = useMutation(LOGIN, {
-    onCompleted: (data) => {
-      Cookies.set("ecToken", data.loginUser.token)
-      setEmail("")
-      setPassword("")
-      history.push("/")
-    },
-    onError: () => {
-      toast.error("Invalid username or password.")
-    },
-  })
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -83,7 +71,20 @@ function LoginPage() {
   })
 
   const loginUser = () => {
-    login({ variables: { email, password } })
+    loginApi(
+      { session: { email, password } },
+      (data) => {
+        if (data) {
+          Cookies.set("ecToken", data.data.token)
+          setEmail("")
+          setPassword("")
+          history.push("/")
+        }
+      },
+      () => {
+        toast.error("Invalid username or password.")
+      }
+    )
   }
 
   return (
