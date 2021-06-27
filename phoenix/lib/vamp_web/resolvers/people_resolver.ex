@@ -17,12 +17,10 @@ defmodule VampWeb.PeopleResolver do
   end
 
   def login_user(_root, args, _info) do
-    {email, password} = args
-
-    case People.find_and_confirm_password(email, password) do
+    case People.find_and_confirm_password(args.email, args.password) do
       {:ok, user} ->
          {:ok, jwt, _full_claims} = Guardian.encode_and_sign(user, :api)
-         {:ok, jwt}
+         {:ok, %{token: jwt}}
       {:error, reason} -> {:error, reason}
     end
   end

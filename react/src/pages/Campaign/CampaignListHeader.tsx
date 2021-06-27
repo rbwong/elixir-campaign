@@ -1,32 +1,36 @@
 // @ts-nocheck
-import React from "react";
+import React from "react"
+import { useQuery } from "@apollo/client"
 
-import DropDown from "components/Fields/Dropdown";
-import ListItem from "components/List/ListItem";
-import ListColumn from "components/List/ListColumn";
+// Components
+import DropDown from "components/Fields/Dropdown"
+import ListItem from "components/List/ListItem"
+import ListColumn from "components/List/ListColumn"
 
-import { useTeams } from "api/teams";
+// Data
+import { GET_TEAMS } from "data/teams/queries"
+import { TeamType } from "data/teams/types"
 
 interface Prop {
-  filter: string;
-  onFilter: () => {};
+  filter: string
+  onFilter: () => {}
 }
 
 function CampaignListHeader({ filter, onFilter }: Prop) {
-  const { data, isLoading } = useTeams();
+  const { isLoading, data } = useQuery(GET_TEAMS)
 
-  if (isLoading) {
-    return null;
+  if (isLoading || !data) {
+    return null
   }
 
   const teamsDict = Object.assign(
-    ...data.map((team) => ({ [team.code]: team }))
-  );
+    ...data.allTeams.map((team: TeamType) => ({ [team.code]: team }))
+  )
 
   return (
     <ListItem>
-      <ListColumn flexSize="0 0 180px">Name</ListColumn>
-      <ListColumn flexSize="0 0 200px">
+      <ListColumn flexSize='0 0 180px'>Name</ListColumn>
+      <ListColumn flexSize='0 0 200px'>
         <DropDown
           options={Object.keys(teamsDict)}
           defaultValue={filter}
@@ -35,12 +39,12 @@ function CampaignListHeader({ filter, onFilter }: Prop) {
           Select team: {filter}
         </DropDown>
       </ListColumn>
-      <ListColumn flexSize="1">Tags</ListColumn>
-      <ListColumn flexSize="0 0 130px">Start date</ListColumn>
-      <ListColumn flexSize="0 0 130px">End date</ListColumn>
-      <ListColumn flexSize="1">Description</ListColumn>
+      <ListColumn flexSize='1'>Tags</ListColumn>
+      <ListColumn flexSize='0 0 130px'>Start date</ListColumn>
+      <ListColumn flexSize='0 0 130px'>End date</ListColumn>
+      <ListColumn flexSize='1'>Description</ListColumn>
     </ListItem>
-  );
+  )
 }
 
-export default CampaignListHeader;
+export default CampaignListHeader

@@ -1,26 +1,26 @@
 // @ts-nocheck
+/* eslint-disable */
 
-import React, { useEffect } from "react";
-import { Route } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-import Cookies from "js-cookie";
+import React, { useEffect } from "react"
+import { Route, useHistory } from "react-router-dom"
+
+import Cookies from "js-cookie"
 
 const PrivateRoute = ({ component: Component, path, ...rest }) => {
-  const history = useHistory();
-  const isAuthenticated = Cookies.get("bToken") ? true : false;
-  const loading = false;
+  const history = useHistory()
+  const isAuthenticated = Cookies.get("ecToken") ? true : false
 
   useEffect(() => {
-    if (loading || isAuthenticated) {
-      return;
+    if (path && isAuthenticated) {
+      return
     }
-    history.push("/login");
-  }, []);
+    history.push("/login")
+  })
 
   const render = (props: any) =>
-    isAuthenticated === true ? <Component {...props} /> : null;
+    isAuthenticated === true ? <Component {...props} /> : null
 
-  return <Route path={path} render={render} {...rest} />;
-};
+  return <Route path={path} render={render} {...rest} />
+}
 
-export default PrivateRoute;
+export default PrivateRoute

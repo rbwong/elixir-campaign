@@ -8,7 +8,7 @@ import LoginPage from "pages/LoginPage";
 
 function App() {
   useEffect(() => {
-    document.title = "Brand Campaign";
+    document.title = "Elixir Campaign";
   }, []);
 
   return (

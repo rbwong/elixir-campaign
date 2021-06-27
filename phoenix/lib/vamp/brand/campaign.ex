@@ -37,4 +37,11 @@ defmodule Vamp.Brand.Campaign do
     # associate tags to the campaign
     |> put_assoc(:tags, tags)
   end
+
+  def changeset_update_team(campaign, team) do
+    campaign
+    |> cast(%{}, [:budget, :descsription, :end_date, :name, :start_date, :inserted_at, :updated_at])
+    # associate team to the campaign
+    |> put_assoc(:team, team)
+  end
 end

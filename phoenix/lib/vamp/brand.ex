@@ -6,6 +6,7 @@ defmodule Vamp.Brand do
   import Ecto.Query, warn: false
   alias Vamp.Repo
 
+  alias Vamp.People.Team
   alias Vamp.Brand.Campaign
   alias Vamp.Brand.Tag
 
@@ -115,7 +116,7 @@ defmodule Vamp.Brand do
 
   """
   def list_campaigns do
-    Repo.all(Campaign) |> Repo.preload(:tags)
+    Repo.all(Campaign) |> Repo.preload(:tags) |> Repo.preload(:team)
   end
 
   @doc """
@@ -199,8 +200,25 @@ defmodule Vamp.Brand do
     Campaign.changeset(campaign, attrs)
   end
 
+  def upsert_campaign_team(campaign_id, team_id) do
+    campaign = Repo.get!(Campaign, campaign_id)
+    team = Repo.get!(Team, team_id)
+
+    with {:ok, _struct} <-
+           campaign
+           |> Campaign.changeset_update_team(team)
+           |> Repo.update() do
+      {:ok, Repo.get!(Campaign, campaign.id)}
+    else
+      error ->
+        error
+    end
+  end
+
   def upsert_campaign_tags(campaign_id, tag_ids) do
-    campaign = Repo.get!(Campaign, campaign_id) |> Repo.preload(:tags)
+    campaign = Repo.get!(Campaign, campaign_id)
+    |> Repo.preload(:tags)
+    |> Repo.preload(:team)
     tags =
       Tag
       |> where([tag], tag.id in ^tag_ids)

@@ -22,7 +22,7 @@ defmodule VampWeb.Schema do
   end
 
   object :jwt do
-    field :jwt, non_null(:string)
+    field :token, non_null(:string)
   end
 
   object :tag do
@@ -38,6 +38,7 @@ defmodule VampWeb.Schema do
     field :end_date, non_null(:datetime)
     field :descsription, non_null(:string)
     field :tags, list_of(:tag)
+    field :team, :team
   end
 
   query do
@@ -77,6 +78,14 @@ defmodule VampWeb.Schema do
       arg :team_id, non_null(:id)
 
       resolve &PeopleResolver.assign_user_team/3
+    end
+
+    @desc "Assigns a team to a campaign"
+    field :assign_campaign_team, :user do
+      arg :user_id, non_null(:id)
+      arg :campaign_id, non_null(:id)
+
+      resolve &BrandResolver.assign_campaign_team/3
     end
   end
 end
