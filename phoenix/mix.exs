@@ -38,6 +38,7 @@ defmodule Vamp.MixProject do
       {:ecto_sql, "~> 3.4"},
       {:comeonin, "~> 3.0"},
       {:cors_plug, "~> 2.0"},
+      {:csv, "~> 2.1"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_live_dashboard, "~> 0.2.0"},
       {:telemetry_metrics, "~> 0.4"},

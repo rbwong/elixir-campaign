@@ -33,7 +33,7 @@ defmodule Vamp.People.User do
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:email, :name, :phone, :password, :is_admin])
-    |> validate_required([:email, :name, :password])
+    |> validate_required([:email, :name])
     |> validate_changeset
   end
 

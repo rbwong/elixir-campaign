@@ -27,7 +27,7 @@ defmodule Vamp.Brand.Campaign do
   @doc false
   def changeset(campaign, attrs) do
     campaign
-    |> cast(attrs, [:name, :start_date, :end_date, :budget, :descsription])
+    |> cast(attrs, [:name, :team_id, :start_date, :end_date, :budget, :descsription])
     |> validate_required([:name, :start_date, :end_date, :budget, :descsription])
   end
 
