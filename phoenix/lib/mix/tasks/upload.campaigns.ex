@@ -10,9 +10,9 @@ defmodule Mix.Tasks.Upload.Campaigns do
   def run(_args) do
     Mix.Task.run("app.start")
     Mix.shell().info("Uploading seeds to DB")
-    # upload_teams()
-    # upload_users()
-    # upload_memberships()
+    upload_teams()
+    upload_users()
+    upload_memberships()
     upload_campaigns()
     Mix.shell().info("Finished")
   end
