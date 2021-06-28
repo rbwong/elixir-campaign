@@ -27,7 +27,7 @@ function CampaignListItem({ campaign }: Prop) {
       </ListColumn>
       <ListColumn flexSize='0 0 130px'>{startDate.toLocaleString()}</ListColumn>
       <ListColumn flexSize='0 0 130px'>{endDate.toLocaleString()}</ListColumn>
-      <ListColumn flexSize='1'>{campaign.description}</ListColumn>
+      <ListColumn flexSize='1'>{campaign.descsription}</ListColumn>
     </ListItem>
   )
 }

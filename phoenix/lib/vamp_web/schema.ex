@@ -59,6 +59,8 @@ defmodule VampWeb.Schema do
 
     @desc "Get all campaigns"
     field :all_campaigns, non_null(list_of(non_null(:campaign))) do
+      arg :team, non_null(:string)
+
       resolve(&BrandResolver.all_campaigns/3)
     end
   end

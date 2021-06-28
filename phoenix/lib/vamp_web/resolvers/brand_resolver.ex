@@ -5,8 +5,8 @@ defmodule VampWeb.BrandResolver do
     {:ok, Brand.list_tags()}
   end
 
-  def all_campaigns(_root, _args, _info) do
-    {:ok, Brand.list_campaigns()}
+  def all_campaigns(_root, args, _info) do
+    {:ok, Brand.list_campaigns(args.team)}
   end
 
   def assign_campaign_team(_root, args, _info) do

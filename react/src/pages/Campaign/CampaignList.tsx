@@ -33,7 +33,9 @@ const Row = styled.div`
 
 function CampaignList() {
   const [teamFilter, setTeamFilter] = useState("all")
-  const { isLoading, data } = useQuery(GET_CAMPAIGNS)
+  const { isLoading, data } = useQuery(GET_CAMPAIGNS, {
+    variables: { team: teamFilter },
+  })
 
   if (isLoading || !data) {
     return (

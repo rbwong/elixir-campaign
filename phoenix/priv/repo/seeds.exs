@@ -17,7 +17,7 @@ alias Vamp.Brand
 # %Team{name: "District 1", code: "d1", color_set: "red"} |> Repo.insert!
 # %Team{name: "District 2", code: "d2", color_set: "blue"} |> Repo.insert!
 
-# team = People.get_team!(1)
+team = People.get_team!(2)
 
 # %Campaign{
 #   team: team,
@@ -28,14 +28,14 @@ alias Vamp.Brand
 #   end_date: DateTime.truncate(DateTime.utc_now, :second),
 # } |> Repo.insert!
 
-# %Campaign{
-#   team: team,
-#   name: "Nudie Shirt",
-#   descsription: "None",
-#   budget: 4200.0,
-#   start_date: DateTime.truncate(DateTime.utc_now, :second),
-#   end_date: DateTime.truncate(DateTime.utc_now, :second),
-# } |> Repo.insert!
+%Campaign{
+  team: team,
+  name: "JAG Linen Shirt",
+  descsription: "This is a description",
+  budget: 5600.0,
+  start_date: DateTime.truncate(DateTime.utc_now, :second),
+  end_date: DateTime.truncate(DateTime.utc_now, :second),
+} |> Repo.insert!
 
 # Brand.upsert_campaign_tags(4, [1,2,3,6])
-Brand.upsert_campaign_tags(5, [4,5,6])
+Brand.upsert_campaign_tags(6, [4,5,6])

@@ -115,8 +115,23 @@ defmodule Vamp.Brand do
       [%Campaign{}, ...]
 
   """
-  def list_campaigns do
-    Repo.all(Campaign) |> Repo.preload(:tags) |> Repo.preload(:team)
+  def list_campaigns(team) do
+    if team == "all" do
+      IO.inspect(team)
+      Repo.all(Campaign)
+      |> Repo.preload(:tags)
+      |> Repo.preload(:team)
+    else
+      query =
+        from(c in Campaign,
+          join: t in assoc(c, :team),
+          where: t.code == ^team
+        )
+      query
+      |> Repo.all()
+      |> Repo.preload(:tags)
+      |> Repo.preload(:team)
+    end
   end
 
   @doc """

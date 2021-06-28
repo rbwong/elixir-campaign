@@ -9,6 +9,6 @@ export interface CampaignType {
   startDate: string
   endDate: string
   tags: TagType[]
-  description: string
+  descsription: string
   team: TeamType
 }
